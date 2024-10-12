@@ -26,14 +26,25 @@ class Solution10 {
             // 更新总分数 (通分)
             numerator = numerator * denominatorPart + numeratorPart * denominator;
             denominator *= denominatorPart;
+
+            // 化简分数，避免分子分母值过大
+            long gcdValue = gcd(Math.abs(numerator), Math.abs(denominator));
+            numerator /= gcdValue;
+            denominator /= gcdValue;
         }
 
         // 处理分数化简
         if (numerator == 0) {
             return "0/1";
         }
-        long gcdValue = gcd(Math.abs(numerator), denominator); // 获取最大公约数
-        return (numerator / gcdValue) + "/" + (denominator / gcdValue);
+
+        // 确保分母为正数
+        if (denominator < 0) {
+            numerator = -numerator;
+            denominator = -denominator;
+        }
+
+        return numerator + "/" + denominator;
     }
 
     // 求最大公约数
